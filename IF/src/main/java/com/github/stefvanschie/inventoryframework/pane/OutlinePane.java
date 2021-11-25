@@ -6,6 +6,7 @@ import com.github.stefvanschie.inventoryframework.gui.GuiItem;
 import com.github.stefvanschie.inventoryframework.exception.XMLLoadException;
 import com.github.stefvanschie.inventoryframework.pane.util.Mask;
 import com.github.stefvanschie.inventoryframework.util.GeometryUtil;
+import com.github.stefvanschie.inventoryframework.util.XMLUtil;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -511,8 +512,10 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
             Orientable.load(outlinePane, element);
             Rotatable.load(outlinePane, element);
 
-            if (element.hasAttribute("populate"))
+            if (element.hasAttribute("populate")) {
+                XMLUtil.invokeMethod(instance, element.getAttribute("populate"), outlinePane, OutlinePane.class);
                 return outlinePane;
+            }
 
             NodeList childNodes = element.getChildNodes();
 
